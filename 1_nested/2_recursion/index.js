@@ -1,57 +1,3 @@
-# JavaScript: Five Advanced Challenges and Concepts
-
-## Nested relationships
-
-### Managing nested comments
-
-### Using a data map to turn flat arrays into trees
-
-```js
-const data = [
-  { id: 1, parent: 0, text: "Top-level comment 1" },
-  { id: 2, parent: 0, text: "Top-level comment 2" },
-  { id: 3, parent: 1, text: "Reply to Top-level comment 1" },
-  { id: 4, parent: 3, text: "Reply to Reply to Top-level comment 1" },
-];
-
-/**
- * Restructure the flat data array into a nested array.
- *
- * @param {array} data
- * @returns {array}
- */
-function restructureArray(data) {
-  const dataMap = {};
-  // Create an array to hold the root elements
-  const root = [];
-
-  // First pass: create a map of id to item
-  data.forEach(item => {
-    dataMap[item.id] = { ...item, children: [] };
-  });
-
-  // Second pass: build the tree structure
-  data.forEach(item => {
-    const parent = dataMap[item.parent];
-    if (parent) {
-      parent.children.push(dataMap[item.id]);
-    } else {
-      root.push(dataMap[item.id]);
-    }
-  });
-
-  return root;
-}
-
-const result = restructureArray(data);
-
-// Output the resut array as a tree.
-console.log(JSON.stringify(result, null, 2));
-```
-
-### Creating a recursive function to generate a nested array
-
-```js
 const data = [
   { id: 1, parent: 0, text: "Top-level comment 1" },
   { id: 2, parent: 0, text: "Top-level comment 2" },
@@ -73,7 +19,7 @@ function restructureArray(data) {
 
   // Iterate through the data array and add each item to the map
   // with its ID as the key and add an empty children array.
-  data.forEach(item => {
+  data.forEach((item) => {
     dataMap[item.id] = {
       ...item,
       children: [],
@@ -83,7 +29,7 @@ function restructureArray(data) {
   // Iterate through the data array again. If the item has a parent,
   // add it as a child of its parent. If it doesn't have a parent,
   // it's a root element and should be added to the `root` array.
-  data.forEach(item => {
+  data.forEach((item) => {
     const parent = dataMap[item.parent];
     if (parent) {
       parent.children.push(dataMap[item.id]);
@@ -108,7 +54,7 @@ function generateNestedText(comments, level = 0) {
   let output = "";
 
   // Iterate through the comments array and add each comment's text
-  comments.forEach(comment => {
+  comments.forEach((comment) => {
     // Create an indent string based on the current level
     let indent = "-".repeat(level + 1) + " ";
 
@@ -127,10 +73,3 @@ function generateNestedText(comments, level = 0) {
 const result = generateNestedText(comments);
 
 console.log(result);
-```
-
-### Challenge: make nested array
-
-```js
-
-```
