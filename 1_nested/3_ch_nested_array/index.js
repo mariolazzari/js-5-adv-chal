@@ -1,12 +1,3 @@
-// JavaScript code​​​​​​‌‌‌​​‌​‌‌‌​​​‌‌​​​​‌​‌‌​​ below
-// Write your answer here, and then test your code.
-// Your job is to implement the findLargest() method.
-
-// Change these boolean values to control whether you see
-// the expected answer and/or hints.
-const showExpectedResult = true;
-const showHints = false;
-
 const data = [
   { id: 1, parent: 0 },
   { id: 2, parent: 0 },
@@ -27,5 +18,18 @@ const data = [
 
 // Restructure the data array into a nested array
 function restructureArray(data) {
-  // Your code goes here
+  const map = {};
+  const result = [];
+
+  data.forEach(item => {
+    map[item.id] = { ...item, children: [] };
+  });
+
+  data.forEach(item => {
+    if (item.parent > 0) {
+      map[item.parent].children.push(map[item.id]);
+    } else {
+      result.push(map[item.id]);
+    }
+  });
 }
