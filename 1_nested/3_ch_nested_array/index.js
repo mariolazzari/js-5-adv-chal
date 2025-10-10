@@ -16,20 +16,29 @@ const data = [
   { id: 15, parent: 3 },
 ];
 
-// Restructure the data array into a nested array
+// Restructure the items array into a nested object
 function restructureArray(data) {
-  const map = {};
-  const result = [];
+  const dataMap = {};
+  const root = [];
 
   data.forEach(item => {
-    map[item.id] = { ...item, children: [] };
+    dataMap[item.id] = {
+      ...item,
+      children: [],
+    };
   });
 
   data.forEach(item => {
-    if (item.parent > 0) {
-      map[item.parent].children.push(map[item.id]);
+    const parent = dataMap[item.parent];
+    if (parent) {
+      parent.children.push(dataMap[item.id]);
     } else {
-      result.push(map[item.id]);
+      root.push(dataMap[item.id]);
     }
   });
+
+  return root;
 }
+
+const result = restructureArray(data);
+console.log(JSON.stringify(result, null, 2));
